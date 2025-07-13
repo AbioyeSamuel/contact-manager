@@ -5,7 +5,6 @@ import { supabase } from '@/lib/supabase'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { motion } from 'framer-motion'
-// import { cn } from '@/lib/utils'
 
 type Contact = {
   id: string
@@ -19,10 +18,23 @@ type SortKey = 'name' | 'email'
 type SortOrder = 'asc' | 'desc' | null
 
 export default function ContactTable() {
-  const [contacts, setContacts] = useState<Contact[]>([])
+  const [allContacts, setAllContacts] = useState<Contact[]>([])
   const [search, setSearch] = useState('')
+  const [debouncedSearch, setDebouncedSearch] = useState('')
   const [sortKey, setSortKey] = useState<SortKey>('name')
   const [sortOrder, setSortOrder] = useState<SortOrder>(null)
+  const [page, setPage] = useState(1)
+  const pageSize = 10
+
+  // Debounce effect: updates debouncedSearch after 300ms of inactivity
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearch(search)
+      setPage(1)
+    }, 300)
+
+    return () => clearTimeout(handler)
+  }, [search])
 
   useEffect(() => {
     const fetchContacts = async () => {
@@ -34,9 +46,8 @@ export default function ContactTable() {
         .select('*')
         .eq('user_id', user.id)
         .order('created_at', { ascending: false })
-        .limit(20)
 
-      setContacts(data || [])
+      setAllContacts(data || [])
     }
 
     fetchContacts()
@@ -47,7 +58,7 @@ export default function ContactTable() {
   }
 
   const handleEdit = (id: string, field: keyof Contact, value: string) => {
-    setContacts(prev =>
+    setAllContacts(prev =>
       prev.map(c => (c.id === id ? { ...c, [field]: value } : c))
     )
     updateContact(id, field, value)
@@ -65,9 +76,9 @@ export default function ContactTable() {
   }
 
   const filteredAndSorted = useMemo(() => {
-    let filtered = contacts.filter(c =>
-      c.name.toLowerCase().includes(search.toLowerCase()) ||
-      c.email.toLowerCase().includes(search.toLowerCase())
+    let filtered = allContacts.filter(c =>
+      c.name.toLowerCase().includes(debouncedSearch.toLowerCase()) ||
+      c.email.toLowerCase().includes(debouncedSearch.toLowerCase())
     )
 
     if (sortOrder) {
@@ -81,7 +92,13 @@ export default function ContactTable() {
     }
 
     return filtered
-  }, [contacts, search, sortKey, sortOrder])
+  }, [allContacts, debouncedSearch, sortKey, sortOrder])
+
+  const totalPages = Math.ceil(filteredAndSorted.length / pageSize)
+  const paginatedContacts = filteredAndSorted.slice(
+    (page - 1) * pageSize,
+    page * pageSize
+  )
 
   return (
     <div className="space-y-4">
@@ -117,7 +134,7 @@ export default function ContactTable() {
             </tr>
           </thead>
           <tbody>
-            {filteredAndSorted.map(contact => (
+            {paginatedContacts.map(contact => (
               <motion.tr
                 key={contact.id}
                 initial={{ opacity: 0, y: 5 }}
@@ -147,6 +164,26 @@ export default function ContactTable() {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex justify-between items-center pt-4">
+        <Button
+          variant="outline"
+          disabled={page === 1}
+          onClick={() => setPage(prev => Math.max(prev - 1, 1))}
+        >
+          Previous
+        </Button>
+        <span className="text-sm text-muted-foreground">
+          Page {page} of {totalPages}
+        </span>
+        <Button
+          variant="outline"
+          disabled={page === totalPages}
+          onClick={() => setPage(prev => Math.min(prev + 1, totalPages))}
+        >
+          Next
+        </Button>
       </div>
     </div>
   )

@@ -8,8 +8,7 @@ This app allows users to **sign up**, **log in**, and **manage personal contacts
 
 ## 🚀 Live Demo
 
-🔗 [https://your-deployed-vercel-link.vercel.app](https://your-deployed-vercel-link.vercel.app)  
-> _(Replace with your actual deployment link)_
+🔗 [https://contact-manager-phi-snowy.vercel.app](https://contact-manager-phi-snowy.vercel.app)  
 
 ---
 
@@ -79,7 +78,7 @@ CREATE POLICY "Users can manage their own contacts"
 ### 📦 Setup Instructions
 #### Clone the Repository
 
-git clone https://github.com/your-username/contact-manager.git
+git clone https://github.com/AbioyeSamuel/contact-manager.git
 cd contact-manager
 
 #### Create .env.local

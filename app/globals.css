@@ -116,7 +116,8 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gradient-to-br from-[#f8fafc] via-[#eef2ff] to-[#e0f2fe] text-foreground dark:from-[#0f172a] dark:via-[#1e293b] dark:to-[#0f172a];
   }
 }
