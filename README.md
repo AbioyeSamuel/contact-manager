@@ -40,7 +40,7 @@ This app allows users to **sign up**, **log in**, and **manage personal contacts
 
 ---
 
-## 🧪 Tech Stack
+## Tech Stack
 
 | Area         | Stack                                |
 |--------------|---------------------------------------|
@@ -52,7 +52,7 @@ This app allows users to **sign up**, **log in**, and **manage personal contacts
 
 ---
 
-## 📂 Supabase Table Schema
+## Supabase Table Schema
 
 ```sql
 -- contacts table
@@ -75,7 +75,7 @@ CREATE POLICY "Users can manage their own contacts"
   USING (auth.uid() = user_id);
 ```
 
-### 📦 Setup Instructions
+### Setup Instructions
 #### Clone the Repository
 
 git clone https://github.com/AbioyeSamuel/contact-manager.git
@@ -84,15 +84,15 @@ cd contact-manager
 #### Create .env.local
 
 NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+
 NEXT_PUBLIC_SUPABASE_ANON_KEY=your-public-anon-key
 
 #### Install Dependencies & Run Dev Server
 
-
 - npm install
 - npm run dev
 
-### ✨ Bonus Features Implemented
+### Bonus Features Implemented
 - Responsive UI with Tailwind + Shadcn
 
 - Search/filter contacts (client-side debounce)
