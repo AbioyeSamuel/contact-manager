@@ -1,4 +1,4 @@
-# 📇 Contact Manager App
+# Contact Manager App
 
 A full-stack contact management application built with **Next.js**, **Supabase**, **Tailwind CSS**, and **Shadcn UI**.
 
@@ -6,13 +6,13 @@ This app allows users to **sign up**, **log in**, and **manage personal contacts
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
 
 🔗 [https://contact-manager-phi-snowy.vercel.app](https://contact-manager-phi-snowy.vercel.app)  
 
 ---
 
-## 🛠️ Features
+## Features
 
 ### Authentication
 - Email/password authentication via **Supabase Auth**
