@@ -30,7 +30,7 @@ This app allows users to **sign up**, **log in**, and **manage personal contacts
 
 ### Large Dataset Handling
 - Pre-seeded with 500+ contact records (via SQL or script)
-- Displays 20 contacts per page
+- Displays 10 contacts per page
 - Efficient frontend rendering with pagination
 
 ### Supabase Security
